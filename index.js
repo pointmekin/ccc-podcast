@@ -74,14 +74,19 @@ function handleEvent(event) {
     return Promise.resolve(null);
   } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part1") {
     const payload = {
-      type: "flex",
-      messages:[{
-        type="flex",
-        altText:"flex",
-        contents: generateFlexbox(data, 0)
+      // messages:[{
+      //   type="flex",
+      //   altText:"flex",
+      //   contents: generateFlexbox(data, 0)
 
-      }
-      ] 
+      // }
+      // ] 
+
+      
+      type: 'flex',
+      altText: 'aaa',
+      contents: generateFlexbox(data, 0)
+      
     }
     return client.replyMessage(event.replyToken, payload);
   } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part2") {
