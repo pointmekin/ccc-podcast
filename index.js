@@ -72,12 +72,16 @@ app.post('/callback', line.middleware(config), (req, res) => {
     });
 });
 
+// functions
+
 const allowedKeywords = ["part1", "part2", "part3", "part4", "part5"]
 
 const generateIndex = (message) => {
+  let index = 0
   allowedKeywords.forEach((word,i)=> {
-    if (word === message) return i
+    if (word === message) index = i
   })
+  return index
 }
 
 // event handler
@@ -89,18 +93,6 @@ function handleEvent(event) {
   } else if (event.message.type === "message" || allowedKeywords.includes(event.message.text.toLowerCase())) {
     const index = generateIndex(event.message.text.toLowerCase())
     return client.replyMessage(event.replyToken, generatePayload(data, index));
-  
-  
-    // } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part1") {
-  //   return client.replyMessage(event.replyToken, generatePayload(data, 0));
-  // } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part2") {
-  //   return client.replyMessage(event.replyToken, generatePayload(data, 1));
-  // }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part3") {
-  //   return client.replyMessage(event.replyToken, generatePayload(data, 2));
-  // }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part4") {
-  //   return client.replyMessage(event.replyToken, generatePayload(data, 3));
-  // }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part5") {
-  //   return client.replyMessage(event.replyToken, generatePayload(data, 4));
   } else {
     const payload = {
       type: "text",
