@@ -72,7 +72,7 @@ app.post('/callback', line.middleware(config), (req, res) => {
     });
 });
 
-const allowedKeywords = ["part1", "part2", "part3", "part4", "part5", ]
+const allowedKeywords = ["part1", "part2", "part3", "part4", "part5"]
 
 const generateIndex = (message) => {
   allowedKeywords.forEach((word,i)=> {
@@ -87,7 +87,7 @@ function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') {
     // ignore non-text-message event
     return Promise.resolve(null);
-  } else if (event.message.type === "message" || allowedKeywords.contains(event.message.text.toLowerCase())) {
+  } else if (event.message.type === "message" || allowedKeywords.includes(event.message.text.toLowerCase())) {
     const index = generateIndex(event.message.text.toLowerCase())
     return client.replyMessage(event.replyToken, generatePayload(data, index));
   
