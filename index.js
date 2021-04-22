@@ -78,6 +78,7 @@ const generateIndex = (message) => {
   allowedKeywords.forEach((word,i)=> {
     if (word === message) return i
   })
+  return 0
 }
 
 // event handler
@@ -86,7 +87,7 @@ function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') {
     // ignore non-text-message event
     return Promise.resolve(null);
-  } else if (vent.message.type === "message" || allowedKeywords.contains(event.message.text.toLowerCase())) {
+  } else if (event.message.type === "message" || allowedKeywords.contains(event.message.text.toLowerCase())) {
     const index = generateIndex(event.message.text.toLowerCase())
     return client.replyMessage(event.replyToken, generatePayload(data, index));
   
