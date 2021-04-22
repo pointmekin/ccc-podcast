@@ -15,35 +15,35 @@ const data = [
     title: "title",
     description:"description",
     url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
-    image: "https://ibb.co/fH3ycqv"
+    image: "https://i.ibb.co/4pbXQKd/wherebug.png"
   },
   {
     mainTitle: "main title 2",
     title: "title",
     description:"description",
     url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
-    image: "https://ibb.co/fH3ycqv"
+    image: "https://i.ibb.co/4pbXQKd/wherebug.png"
   },
   {
     mainTitle: "main title 3",
     title: "title",
     description:"description",
     url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
-    image: "https://ibb.co/fH3ycqv"
+    image: "https://i.ibb.co/4pbXQKd/wherebug.png"
   },
   {
     mainTitle: "main title 4",
     title: "title",
     description:"description",
     url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
-    image: "https://ibb.co/fH3ycqv"
+    image: "https://i.ibb.co/4pbXQKd/wherebug.png"
   },
   {
     mainTitle: "main title 5",
     title: "title",
     description:"description",
     url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
-    image: "https://ibb.co/fH3ycqv"
+    image: "https://i.ibb.co/4pbXQKd/wherebug.png"
   },
 ]
 const helpMessage = "Commands\n\n\
