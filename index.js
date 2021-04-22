@@ -75,8 +75,12 @@ function handleEvent(event) {
   } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part1") {
     const payload = {
       type: "flex",
-      messages:[
-        generateFlexbox(data, 0)
+      messages:[{
+        type="flex",
+        altText:"flex",
+        contents: generateFlexbox(data, 0)
+
+      }
       ] 
     }
     return client.replyMessage(event.replyToken, payload);
