@@ -1,0 +1,13 @@
+{
+  "name": "ccc-podcast-bot",
+  "version": "0.0.0",
+  "description": "A line bot for CCC final podcast project.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^6.8.0",
+    "express": "^4.16.3"
+  }
+}

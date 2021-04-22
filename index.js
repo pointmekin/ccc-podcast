@@ -1,0 +1,205 @@
+'use strict';
+
+const line = require('@line/bot-sdk');
+const express = require('express');
+
+// create LINE SDK config from env variables
+const config = {
+  channelAccessToken: "2P0kJFv5wUhXiAhcile1OEhfNLdAONVWXAZCQ43/4OqVBLyg6K7pu5fApc6Aol5A8CDXZkK9UQcONhz093u+oTkQSOLaNjWYKgfGIZs0byV5jFFQaP6baFNeNVpg0opqYDnAl2on8fBWRFO4bRMZlwdB04t89/1O/w1cDnyilFU=",
+  channelSecret: "7ad64e0d9df2626f5837860e99f0ce14",
+};
+
+const data = {
+  part1: {
+    mainTitle: "main title 1",
+    title: "title",
+    description:"description",
+    url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
+    image: "https://lh3.googleusercontent.com/lW0V0ZsbCXfhzd-5jzGxMNZ_5RItpwt_TB5n_KckwyCez1lbiAedNPFt7A2BClypNMH-Z3WTrqy4V5x_I_0yl_iWndlFpPSWyBvj9H1H0PATvUvEG7mpQaHJit2Y-J5zF5x3-Pdgvqh4ySuOSoLiaD9Ujz2M-eEj7Sic1aJjnPEvCYVoGdwxkKDep09bxm-EwTBj3HCvUjAQ5k1XcAIAlUSAZ7J7JZaJdTEugeNNrh6kO74vGflkvgwsBqRqesyUaCMft_A_vY-FrroCpb7j1f_ShHx85gwT9KqyhCV7TwgsVCYGgKyT8tsr2ZvX3dhZdgrUeJqD8wI-r-x-Xfrm_jFoBPwj9DMUiCdm5NX3WS0jp9KI2LoOSwb4UxDLRt_Sq1brbPFYaZyKrtxtAfb0d5NEvpHYeQNf9fLczvheWaYzt0XZqdFNjG8opkWgcDesnZ2K23U4_23bMYeKwZp5rjMqVhsxunsdPfugQkE_C0bX_pzPGf6ZhBRdddARqZKuYId7DqHrnTb6rMQuBw0OnXQBLPPdIJN_G3Fyzw5kzBBvVLPDFXx0DrZpiFh7D3n1O9292kihFz1q93w_2P10GKRXeNY7y0kFxS9rdsyhtSwrsZWi2rm93EIkDPrHtDDZP_qOyjBPOQUnW5OZV6FqmyVxHWivFGTMpDbIHULU4A0sCh6Bsz5nbAG8SnIEi2UW_9O9EoP5SXjdc7XbbZDITlmM=w500-h397-no?authuser=0"
+  },
+  part2: {
+    mainTitle: "main title 2",
+    title: "title",
+    description:"description",
+    url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
+    image: "https://lh3.googleusercontent.com/lW0V0ZsbCXfhzd-5jzGxMNZ_5RItpwt_TB5n_KckwyCez1lbiAedNPFt7A2BClypNMH-Z3WTrqy4V5x_I_0yl_iWndlFpPSWyBvj9H1H0PATvUvEG7mpQaHJit2Y-J5zF5x3-Pdgvqh4ySuOSoLiaD9Ujz2M-eEj7Sic1aJjnPEvCYVoGdwxkKDep09bxm-EwTBj3HCvUjAQ5k1XcAIAlUSAZ7J7JZaJdTEugeNNrh6kO74vGflkvgwsBqRqesyUaCMft_A_vY-FrroCpb7j1f_ShHx85gwT9KqyhCV7TwgsVCYGgKyT8tsr2ZvX3dhZdgrUeJqD8wI-r-x-Xfrm_jFoBPwj9DMUiCdm5NX3WS0jp9KI2LoOSwb4UxDLRt_Sq1brbPFYaZyKrtxtAfb0d5NEvpHYeQNf9fLczvheWaYzt0XZqdFNjG8opkWgcDesnZ2K23U4_23bMYeKwZp5rjMqVhsxunsdPfugQkE_C0bX_pzPGf6ZhBRdddARqZKuYId7DqHrnTb6rMQuBw0OnXQBLPPdIJN_G3Fyzw5kzBBvVLPDFXx0DrZpiFh7D3n1O9292kihFz1q93w_2P10GKRXeNY7y0kFxS9rdsyhtSwrsZWi2rm93EIkDPrHtDDZP_qOyjBPOQUnW5OZV6FqmyVxHWivFGTMpDbIHULU4A0sCh6Bsz5nbAG8SnIEi2UW_9O9EoP5SXjdc7XbbZDITlmM=w500-h397-no?authuser=0"
+  },
+  part3: {
+    mainTitle: "main title 3",
+    title: "title",
+    description:"description",
+    url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
+    image: "https://lh3.googleusercontent.com/lW0V0ZsbCXfhzd-5jzGxMNZ_5RItpwt_TB5n_KckwyCez1lbiAedNPFt7A2BClypNMH-Z3WTrqy4V5x_I_0yl_iWndlFpPSWyBvj9H1H0PATvUvEG7mpQaHJit2Y-J5zF5x3-Pdgvqh4ySuOSoLiaD9Ujz2M-eEj7Sic1aJjnPEvCYVoGdwxkKDep09bxm-EwTBj3HCvUjAQ5k1XcAIAlUSAZ7J7JZaJdTEugeNNrh6kO74vGflkvgwsBqRqesyUaCMft_A_vY-FrroCpb7j1f_ShHx85gwT9KqyhCV7TwgsVCYGgKyT8tsr2ZvX3dhZdgrUeJqD8wI-r-x-Xfrm_jFoBPwj9DMUiCdm5NX3WS0jp9KI2LoOSwb4UxDLRt_Sq1brbPFYaZyKrtxtAfb0d5NEvpHYeQNf9fLczvheWaYzt0XZqdFNjG8opkWgcDesnZ2K23U4_23bMYeKwZp5rjMqVhsxunsdPfugQkE_C0bX_pzPGf6ZhBRdddARqZKuYId7DqHrnTb6rMQuBw0OnXQBLPPdIJN_G3Fyzw5kzBBvVLPDFXx0DrZpiFh7D3n1O9292kihFz1q93w_2P10GKRXeNY7y0kFxS9rdsyhtSwrsZWi2rm93EIkDPrHtDDZP_qOyjBPOQUnW5OZV6FqmyVxHWivFGTMpDbIHULU4A0sCh6Bsz5nbAG8SnIEi2UW_9O9EoP5SXjdc7XbbZDITlmM=w500-h397-no?authuser=0"
+  },
+  part4: {
+    mainTitle: "main title 4",
+    title: "title",
+    description:"description",
+    url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
+    image: "https://lh3.googleusercontent.com/lW0V0ZsbCXfhzd-5jzGxMNZ_5RItpwt_TB5n_KckwyCez1lbiAedNPFt7A2BClypNMH-Z3WTrqy4V5x_I_0yl_iWndlFpPSWyBvj9H1H0PATvUvEG7mpQaHJit2Y-J5zF5x3-Pdgvqh4ySuOSoLiaD9Ujz2M-eEj7Sic1aJjnPEvCYVoGdwxkKDep09bxm-EwTBj3HCvUjAQ5k1XcAIAlUSAZ7J7JZaJdTEugeNNrh6kO74vGflkvgwsBqRqesyUaCMft_A_vY-FrroCpb7j1f_ShHx85gwT9KqyhCV7TwgsVCYGgKyT8tsr2ZvX3dhZdgrUeJqD8wI-r-x-Xfrm_jFoBPwj9DMUiCdm5NX3WS0jp9KI2LoOSwb4UxDLRt_Sq1brbPFYaZyKrtxtAfb0d5NEvpHYeQNf9fLczvheWaYzt0XZqdFNjG8opkWgcDesnZ2K23U4_23bMYeKwZp5rjMqVhsxunsdPfugQkE_C0bX_pzPGf6ZhBRdddARqZKuYId7DqHrnTb6rMQuBw0OnXQBLPPdIJN_G3Fyzw5kzBBvVLPDFXx0DrZpiFh7D3n1O9292kihFz1q93w_2P10GKRXeNY7y0kFxS9rdsyhtSwrsZWi2rm93EIkDPrHtDDZP_qOyjBPOQUnW5OZV6FqmyVxHWivFGTMpDbIHULU4A0sCh6Bsz5nbAG8SnIEi2UW_9O9EoP5SXjdc7XbbZDITlmM=w500-h397-no?authuser=0"
+  },
+  part5: {
+    mainTitle: "main title 5",
+    title: "title",
+    description:"description",
+    url: "https://www.youtube.com/channel/UCREO5WPqgVbmcsLyIeFzFjA",
+    image: "https://lh3.googleusercontent.com/lW0V0ZsbCXfhzd-5jzGxMNZ_5RItpwt_TB5n_KckwyCez1lbiAedNPFt7A2BClypNMH-Z3WTrqy4V5x_I_0yl_iWndlFpPSWyBvj9H1H0PATvUvEG7mpQaHJit2Y-J5zF5x3-Pdgvqh4ySuOSoLiaD9Ujz2M-eEj7Sic1aJjnPEvCYVoGdwxkKDep09bxm-EwTBj3HCvUjAQ5k1XcAIAlUSAZ7J7JZaJdTEugeNNrh6kO74vGflkvgwsBqRqesyUaCMft_A_vY-FrroCpb7j1f_ShHx85gwT9KqyhCV7TwgsVCYGgKyT8tsr2ZvX3dhZdgrUeJqD8wI-r-x-Xfrm_jFoBPwj9DMUiCdm5NX3WS0jp9KI2LoOSwb4UxDLRt_Sq1brbPFYaZyKrtxtAfb0d5NEvpHYeQNf9fLczvheWaYzt0XZqdFNjG8opkWgcDesnZ2K23U4_23bMYeKwZp5rjMqVhsxunsdPfugQkE_C0bX_pzPGf6ZhBRdddARqZKuYId7DqHrnTb6rMQuBw0OnXQBLPPdIJN_G3Fyzw5kzBBvVLPDFXx0DrZpiFh7D3n1O9292kihFz1q93w_2P10GKRXeNY7y0kFxS9rdsyhtSwrsZWi2rm93EIkDPrHtDDZP_qOyjBPOQUnW5OZV6FqmyVxHWivFGTMpDbIHULU4A0sCh6Bsz5nbAG8SnIEi2UW_9O9EoP5SXjdc7XbbZDITlmM=w500-h397-no?authuser=0"
+  },
+}
+
+// create LINE SDK client
+const client = new line.Client(config);
+
+// create Express app
+// about Express itself: https://expressjs.com/
+const app = express();
+
+// register a webhook handler with middleware
+// about the middleware, please refer to doc
+app.post('/callback', line.middleware(config), (req, res) => {
+  Promise
+    .all(req.body.events.map(handleEvent))
+    .then((result) => res.json(result))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
+});
+
+// event handler
+function handleEvent(event) {
+  
+  if (event.type !== 'message' || event.message.type !== 'text') {
+    // ignore non-text-message event
+    return Promise.resolve(null);
+  } else if (event.message.type === "message" || event.message.text === "part1") {
+    const payload = {
+      type: "flex",
+      contents: generateFlexbox(data, 1)
+    }
+    return client.replyMessage(event.replyToken, payload);
+  } else if (event.message.type === "message" || event.message.text === "part2") {
+    const payload = {
+      type: "flex",
+      contents: generateFlexbox(data, 2)
+    }
+    return client.replyMessage(event.replyToken, payload);
+  } else {
+    const payload = {
+      type: "text",
+      text: "\
+      Hi, how can I help you?\n\n\
+      - Type 'Hello' to learn more about me.\n\
+      - Type 'Resume' to view my resume."
+    }
+    return client.replyMessage(event.replyToken, payload);
+
+  }
+}
+
+// listen on port
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`listening on ${port}`);
+});
+
+const generateFlexbox = (data, index) => ({
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": data[index].image,
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": data[index].url
+    }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": data[index].mainTitle,
+        "weight": "bold",
+        "size": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Title",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": data[index].title,
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Description",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": data[index].description,
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "Watch Now",
+          "uri": data[index].url
+        }
+      },
+      {
+        "type": "spacer",
+        "size": "sm"
+      }
+    ],
+    "flex": 0
+  }
+})
