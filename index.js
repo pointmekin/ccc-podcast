@@ -46,6 +46,13 @@ const data = [
     image: "https://lh3.googleusercontent.com/lW0V0ZsbCXfhzd-5jzGxMNZ_5RItpwt_TB5n_KckwyCez1lbiAedNPFt7A2BClypNMH-Z3WTrqy4V5x_I_0yl_iWndlFpPSWyBvj9H1H0PATvUvEG7mpQaHJit2Y-J5zF5x3-Pdgvqh4ySuOSoLiaD9Ujz2M-eEj7Sic1aJjnPEvCYVoGdwxkKDep09bxm-EwTBj3HCvUjAQ5k1XcAIAlUSAZ7J7JZaJdTEugeNNrh6kO74vGflkvgwsBqRqesyUaCMft_A_vY-FrroCpb7j1f_ShHx85gwT9KqyhCV7TwgsVCYGgKyT8tsr2ZvX3dhZdgrUeJqD8wI-r-x-Xfrm_jFoBPwj9DMUiCdm5NX3WS0jp9KI2LoOSwb4UxDLRt_Sq1brbPFYaZyKrtxtAfb0d5NEvpHYeQNf9fLczvheWaYzt0XZqdFNjG8opkWgcDesnZ2K23U4_23bMYeKwZp5rjMqVhsxunsdPfugQkE_C0bX_pzPGf6ZhBRdddARqZKuYId7DqHrnTb6rMQuBw0OnXQBLPPdIJN_G3Fyzw5kzBBvVLPDFXx0DrZpiFh7D3n1O9292kihFz1q93w_2P10GKRXeNY7y0kFxS9rdsyhtSwrsZWi2rm93EIkDPrHtDDZP_qOyjBPOQUnW5OZV6FqmyVxHWivFGTMpDbIHULU4A0sCh6Bsz5nbAG8SnIEi2UW_9O9EoP5SXjdc7XbbZDITlmM=w500-h397-no?authuser=0"
   },
 ]
+const helpMessage = "Commands\n\n\
+- Type 'part1' to ...\n\
+- Type 'part2' to ...\n\
+- Type 'part3' to ...\n\
+- Type 'part4' to ...\n\
+- Type 'part5' to ...\n\
+"
 
 // create LINE SDK client
 const client = new line.Client(config);
@@ -73,37 +80,46 @@ function handleEvent(event) {
     // ignore non-text-message event
     return Promise.resolve(null);
   } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part1") {
-    const payload = {
-      // messages:[{
-      //   type="flex",
-      //   altText:"flex",
-      //   contents: generateFlexbox(data, 0)
-
-      // }
-      // ] 
-
-      
+    const payload = {      
       type: 'flex',
-      altText: 'aaa',
-      contents: generateFlexbox(data, 0)
-      
+      altText: 'part1',
+      contents: generateFlexbox(data, 0)    
     }
     return client.replyMessage(event.replyToken, payload);
   } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part2") {
-    const payload = {
-      type: "flex",
-      contents: generateFlexbox(data, 1)
+    const payload = {      
+      type: 'flex',
+      altText: 'part2',
+      contents: generateFlexbox(data, 1)    
+    }
+    return client.replyMessage(event.replyToken, payload);
+  }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part3") {
+    const payload = {      
+      type: 'flex',
+      altText: 'part3',
+      contents: generateFlexbox(data, 2)    
+    }
+    return client.replyMessage(event.replyToken, payload);
+  }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part4") {
+    const payload = {      
+      type: 'flex',
+      altText: 'part4',
+      contents: generateFlexbox(data, 3)    
+    }
+    return client.replyMessage(event.replyToken, payload);
+  }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part5") {
+    const payload = {      
+      type: 'flex',
+      altText: 'part5',
+      contents: generateFlexbox(data, 4)    
     }
     return client.replyMessage(event.replyToken, payload);
   } else {
     const payload = {
       type: "text",
-      text: "Commands\n\n\
-      - Type 'part1' to ...\n\
-      - Type 'Resume' to ..."
+      text: helpMessage
     }
     return client.replyMessage(event.replyToken, payload);
-
   }
 }
 
@@ -171,7 +187,7 @@ const generateFlexbox = (data, index) => ({
             "contents": [
               {
                 "type": "text",
-                "text": "Description",
+                "text": "Info",
                 "color": "#aaaaaa",
                 "size": "sm",
                 "flex": 1
