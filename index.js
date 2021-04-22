@@ -47,12 +47,11 @@ const data = [
   },
 ]
 const helpMessage = "Commands\n\n\
-- Type 'part1' to ...\n\
-- Type 'part2' to ...\n\
-- Type 'part3' to ...\n\
-- Type 'part4' to ...\n\
-- Type 'part5' to ...\n\
-"
+'part1' : ...\n\
+'part2' : ...\n\
+'part3' : ...\n\
+'part4' : ...\n\
+'part5' : ..."
 
 // create LINE SDK client
 const client = new line.Client(config);
@@ -73,47 +72,35 @@ app.post('/callback', line.middleware(config), (req, res) => {
     });
 });
 
+const allowedKeywords = ["part1", "part2", "part3", "part4", "part5", ]
+
+const generateIndex = (message) => {
+  allowedKeywords.forEach((word,i)=> {
+    if (word === message) return i
+  })
+}
+
 // event handler
 function handleEvent(event) {
   
   if (event.type !== 'message' || event.message.type !== 'text') {
     // ignore non-text-message event
     return Promise.resolve(null);
-  } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part1") {
-    const payload = {      
-      type: 'flex',
-      altText: 'part1',
-      contents: generateFlexbox(data, 0)    
-    }
-    return client.replyMessage(event.replyToken, payload);
-  } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part2") {
-    const payload = {      
-      type: 'flex',
-      altText: 'part2',
-      contents: generateFlexbox(data, 1)    
-    }
-    return client.replyMessage(event.replyToken, payload);
-  }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part3") {
-    const payload = {      
-      type: 'flex',
-      altText: 'part3',
-      contents: generateFlexbox(data, 2)    
-    }
-    return client.replyMessage(event.replyToken, payload);
-  }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part4") {
-    const payload = {      
-      type: 'flex',
-      altText: 'part4',
-      contents: generateFlexbox(data, 3)    
-    }
-    return client.replyMessage(event.replyToken, payload);
-  }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part5") {
-    const payload = {      
-      type: 'flex',
-      altText: 'part5',
-      contents: generateFlexbox(data, 4)    
-    }
-    return client.replyMessage(event.replyToken, payload);
+  } else if (vent.message.type === "message" || allowedKeywords.contains(event.message.text.toLowerCase())) {
+    const index = generateIndex(event.message.text.toLowerCase())
+    return client.replyMessage(event.replyToken, generatePayload(data, index));
+  
+  
+    // } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part1") {
+  //   return client.replyMessage(event.replyToken, generatePayload(data, 0));
+  // } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part2") {
+  //   return client.replyMessage(event.replyToken, generatePayload(data, 1));
+  // }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part3") {
+  //   return client.replyMessage(event.replyToken, generatePayload(data, 2));
+  // }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part4") {
+  //   return client.replyMessage(event.replyToken, generatePayload(data, 3));
+  // }else if (event.message.type === "message" || event.message.text.toLowerCase() === "part5") {
+  //   return client.replyMessage(event.replyToken, generatePayload(data, 4));
   } else {
     const payload = {
       type: "text",
@@ -128,6 +115,15 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
+
+const generatePayload = (data, index) => {
+  const payload = {      
+    type: 'flex',
+    altText: `part${index}`,
+    contents: generateFlexbox(data, index)    
+  }
+  return payload
+}
 
 const generateFlexbox = (data, index) => ({
   "type": "bubble",
