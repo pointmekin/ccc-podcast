@@ -72,13 +72,15 @@ function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') {
     // ignore non-text-message event
     return Promise.resolve(null);
-  } else if (event.message.type === "message" || event.message.text === "part1") {
+  } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part1") {
     const payload = {
       type: "flex",
-      contents: generateFlexbox(data, 0)
+      messages:[
+        generateFlexbox(data, 0)
+      ] 
     }
     return client.replyMessage(event.replyToken, payload);
-  } else if (event.message.type === "message" || event.message.text === "part2") {
+  } else if (event.message.type === "message" || event.message.text.toLowerCase() === "part2") {
     const payload = {
       type: "flex",
       contents: generateFlexbox(data, 1)
@@ -87,10 +89,9 @@ function handleEvent(event) {
   } else {
     const payload = {
       type: "text",
-      text: "\
-      Hi, how can I help you?\n\n\
-      - Type 'Hello' to learn more about me.\n\
-      - Type 'Resume' to view my resume."
+      text: "Commands\n\n\
+      - Type 'part1' to ...\n\
+      - Type 'Resume' to ..."
     }
     return client.replyMessage(event.replyToken, payload);
 
