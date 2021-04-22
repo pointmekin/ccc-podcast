@@ -78,7 +78,6 @@ const generateIndex = (message) => {
   allowedKeywords.forEach((word,i)=> {
     if (word === message) return i
   })
-  return 0
 }
 
 // event handler
